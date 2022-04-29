@@ -9,8 +9,12 @@ class MissionsRepository {
             toFirestore: (mission, _) => mission.toJson(),
           );
 
-  void addMission(Mission mission) {
-    missionsRef.add(mission);
+  void addMission(String missionTitle) {
+    missionsRef.add(Mission(missionTitle: missionTitle, isDone: false));
+  }
+
+  void updateMissionCheckbox(String id, bool value) {
+    missionsRef.doc(id).update({'isDone': value});
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getMissions() {

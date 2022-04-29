@@ -12,12 +12,10 @@ class AddMission extends StatefulWidget {
 
 class _AddMissionState extends State<AddMission> {
   final missionTitleContoller = TextEditingController();
-  final missionDescContoller = TextEditingController();
   final MissionsRepository missionsRepository = MissionsRepository();
 
   @override
   void dispose() {
-    missionDescContoller.dispose();
     missionTitleContoller.dispose();
     super.dispose();
   }
@@ -38,20 +36,12 @@ class _AddMissionState extends State<AddMission> {
                       label: Text('Mission title'),
                     ),
                   ),
-                  TextFormField(
-                    controller: missionDescContoller,
-                    decoration: const InputDecoration(
-                      label: Text('Mission description'),
-                    ),
-                  ),
                 ],
               ),
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    missionsRepository.addMission(Mission(
-                        missionTitle: missionTitleContoller.text,
-                        missionDesc: missionDescContoller.text));
+                    missionsRepository.addMission(missionTitleContoller.text);
                     Navigator.of(context).pop();
                   },
                   child: const Text('add mission'),

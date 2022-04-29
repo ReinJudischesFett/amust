@@ -1,16 +1,16 @@
 class Mission {
   late String missionTitle;
-  late String missionDesc;
+  late bool isDone;
 
-  Mission({required this.missionDesc, required this.missionTitle});
+  Mission({required this.missionTitle, required this.isDone});
 
   Mission.fromJson(Map<String, dynamic> json)
       : this(
           missionTitle: json['title']! as String,
-          missionDesc: json['description']! as String,
+          isDone: json['isDone']! as bool,
         );
 
   Map<String, dynamic> toJson() {
-    return {'title': missionTitle, 'description': missionDesc};
+    return {'title': missionTitle, 'isDone': isDone};
   }
 }

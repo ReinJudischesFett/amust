@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'models/mission.dart';
 import 'services/missions_repository.dart';
 import 'widgets/add_mission.dart';
 
@@ -20,8 +21,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final MissionsRepository missionsRepository = MissionsRepository();
-  final missionTitleContoller = TextEditingController();
-  final missionDescContoller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +46,21 @@ class _MyAppState extends State<MyApp> {
                       return SizedBox(
                         child: Card(
                           child: ListTile(
-                              title: Text(
-                                snapshot.data!.docs[index].get('title'),
-                              ),
-                              subtitle: Text(snapshot.data!.docs[index]
-                                  .get('description')),
-                              leading: IconButton(
-                                icon: const Icon(Icons.check_box),
-                                onPressed: () {},
-                              )),
+                            title: Text(
+                              snapshot.data!.docs[index].get('title'),
+                            ),
+                            leading: Checkbox(
+                              value: snapshot.data!.docs[index]
+                                      .get('isDone')
+                                      .toString()
+                                      .toLowerCase() ==
+                                  'true',
+                              onChanged: (bool? value) {
+                                missionsRepository.updateMissionCheckbox(
+                                    snapshot.data!.docs[index].id, value!);
+                              },
+                            ),
+                          ),
                         ),
                       );
                     },
