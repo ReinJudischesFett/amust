@@ -1,22 +1,22 @@
+import 'package:amust/services/folder_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../models/mission.dart';
-import '../services/missions_repository.dart';
+import '../models/folder.dart';
 
-class AddMission extends StatefulWidget {
-  const AddMission({Key? key}) : super(key: key);
+class AddFolderButton extends StatefulWidget {
+  const AddFolderButton({Key? key}) : super(key: key);
 
   @override
-  State<AddMission> createState() => _AddMissionState();
+  State<AddFolderButton> createState() => _AddFolderButtonState();
 }
 
-class _AddMissionState extends State<AddMission> {
-  final missionTitleContoller = TextEditingController();
-  final MissionsRepository missionsRepository = MissionsRepository();
-
+class _AddFolderButtonState extends State<AddFolderButton> {
+  final folderTitleController = TextEditingController();
+  final folderService = FolderService();
   @override
   void dispose() {
-    missionTitleContoller.dispose();
+    folderTitleController.dispose();
     super.dispose();
   }
 
@@ -31,9 +31,9 @@ class _AddMissionState extends State<AddMission> {
               content: Column(
                 children: [
                   TextFormField(
-                    controller: missionTitleContoller,
+                    controller: folderTitleController,
                     decoration: const InputDecoration(
-                      label: Text('Mission title'),
+                      label: Text('Folder title'),
                     ),
                   ),
                 ],
@@ -41,17 +41,17 @@ class _AddMissionState extends State<AddMission> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    missionsRepository.addMission(missionTitleContoller.text);
+                    folderService.addFolder(folderTitleController.text);
                     Navigator.of(context).pop();
                   },
-                  child: const Text('add mission'),
+                  child: const Text('add folder'),
                 )
               ],
             );
           },
         );
       },
-      label: const Text('add mission'),
+      label: const Text('add folder'),
     );
   }
 }
